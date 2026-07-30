@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "175859677786",
+    "project_id": "e-commers-app-38034",
+    "storage_bucket": "e-commers-app-38034.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:175859677786:android:234f076b4bdce00ffeb663",
+        "android_client_info": {
+          "package_name": "com.example.greeno_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBid_lxd8I0nRjflViwhvb8b6ENjW7oN08"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
