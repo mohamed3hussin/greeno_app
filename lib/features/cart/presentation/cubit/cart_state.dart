@@ -12,6 +12,18 @@ class CartState extends Equatable {
     }
     return total;
   }
+  double get subtotal {
+    return items.fold(
+      0,
+          (sum, item) {
+        final price =
+            item.product.discountPrice ??
+                item.product.price;
+
+        return sum + (price * item.quantity);
+      },
+    );
+  }
   CartState copyWith({
     List<CartItemEntity>? items
 }){
