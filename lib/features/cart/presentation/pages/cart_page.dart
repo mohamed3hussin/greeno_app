@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:greeno_app/core/constants/app_images.dart';
 import 'package:greeno_app/core/constants/primary_button.dart';
+import 'package:greeno_app/features/auth/domain/entities/user_entity.dart';
 import 'package:greeno_app/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:greeno_app/features/cart/presentation/widget/cart_item_widget.dart';
 import 'package:greeno_app/features/cart/presentation/widget/order_summary_widget.dart';
 
-class CartPage extends StatelessWidget {
-  const CartPage({super.key});
+import '../../../../core/routes/route_names.dart';
 
+class CartPage extends StatelessWidget {
+  const CartPage({
+    super.key,
+    required this.user
+  });
+  final UserEntity user;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +50,15 @@ class CartPage extends StatelessWidget {
                     children: [
                       OrderSummaryWidget(subtotal: state.subtotal,),
                       SizedBox(height: 16.h,),
-                      PrimaryButton(text: 'Proceed to Checkout', onPressed: (){}),
+                      PrimaryButton(text: 'Proceed to Checkout', onPressed: (){
+                        context.push(
+                          RouteNames.checkout,
+                          extra: {
+                            'user': user,
+                            'cartCubit': context.read<CartCubit>(),
+                          },
+                        );
+                      }),
                     ],
                   ),
                 ],

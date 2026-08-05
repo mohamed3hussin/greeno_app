@@ -54,7 +54,7 @@ class ProductModel extends ProductEntity {
   }
   Map<String,dynamic> toJson(){
     return{
-
+      'id':id,
       'name':name,
       'description':description,
       'price':price,

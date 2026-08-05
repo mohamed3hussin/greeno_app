@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:greeno_app/features/favorite/data/models/favorite_item_hive_model.dart';
 import 'package:greeno_app/firebase_options.dart';
 
 import '../../features/cart/data/models/cart_item_hive_model.dart';
@@ -15,8 +16,9 @@ class AppInitializer {
 
     Hive.registerAdapter(ProductHiveModelAdapter());
     Hive.registerAdapter(CartItemHiveModelAdapter());
-
+    Hive.registerAdapter(FavoriteItemHiveModelAdapter());
     await Hive.openBox<CartItemHiveModel>('cartBox');
+    await Hive.openBox<FavoriteItemHiveModel>('favoriteBox');
     await setupDependencies();
   }
 }

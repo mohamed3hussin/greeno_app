@@ -16,6 +16,8 @@ import 'package:greeno_app/features/navigation/presentation/pages/navigation_pag
 
 import '../../features/auth/domain/entities/register_data_entity.dart';
 import '../../features/auth/presentation/cubit/auth_cubit.dart';
+import '../../features/cart/presentation/cubit/cart_cubit.dart';
+import '../../features/checkout/presentation/pages/checkout_page.dart';
 import '../../features/splash/presentation/pages/splash_page.dart';
 import '../dependency_injection/injection_container.dart';
 
@@ -104,6 +106,19 @@ class AppRouter {
               final user = state.extra as UserEntity;
               return NavigationPage(user: user);
             }
+        ),
+        GoRoute(
+          path: RouteNames.checkout,
+          builder: (context, state) {
+            final data = state.extra as Map<String, dynamic>;
+
+            return BlocProvider.value(
+              value: data['cartCubit'] as CartCubit,
+              child: CheckoutPage(
+                user: data['user'] as UserEntity,
+              ),
+            );
+          },
         ),
 
       ],

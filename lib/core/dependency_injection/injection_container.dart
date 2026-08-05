@@ -12,6 +12,10 @@ import 'package:greeno_app/features/auth/domain/usecases/send_email_verification
 import 'package:greeno_app/features/auth/presentation/cubit/address_cubit.dart';
 import 'package:greeno_app/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:greeno_app/features/auth/presentation/cubit/password_visibility_cubit.dart';
+import 'package:greeno_app/features/favorite/data/datasource/favorite_local_data_source.dart';
+import 'package:greeno_app/features/favorite/data/datasource/favorite_local_data_source_impl.dart';
+import 'package:greeno_app/features/favorite/data/models/favorite_item_hive_model.dart';
+import 'package:greeno_app/features/favorite/presentation/cubit/favorite_cubit.dart';
 import 'package:greeno_app/features/navigation/presentation/cubit/navigation_cubit.dart';
 import 'package:greeno_app/features/splash/data/data_sources/splash_remote_data_source.dart';
 import 'package:greeno_app/features/splash/data/data_sources/splash_remote_data_source_impl.dart';
@@ -27,6 +31,12 @@ import '../../features/cart/data/datasource/cart_local_data_source.dart';
 import '../../features/cart/data/datasource/cart_local_data_source_impl.dart';
 import '../../features/cart/data/models/cart_item_hive_model.dart';
 import '../../features/cart/presentation/cubit/cart_cubit.dart';
+import '../../features/checkout/data/datasource/checkout_remote_data_source.dart';
+import '../../features/checkout/data/datasource/firebase_checkout_remote_data_source.dart';
+import '../../features/checkout/data/repositories/checkout_repository_impl.dart';
+import '../../features/checkout/domain/repositories/checkout_repository.dart';
+import '../../features/checkout/domain/usecases/place_order_use_case.dart';
+import '../../features/checkout/presentation/cubit/checkout_cubit.dart';
 import '../../features/home/data/datasource/firebase_home_remote_data_source_impl.dart';
 import '../../features/home/data/datasource/home_remote_data_source.dart';
 import '../../features/home/data/repository_impl/home_repository_impl.dart';
@@ -169,5 +179,36 @@ Future<void> setupDependencies()async{
   );
   sl.registerLazySingleton<CartLocalDataSource>(
         () => CartLocalDataSourceImpl(sl()),
+  );
+
+  sl.registerFactory<FavoriteCubit>(
+        () => FavoriteCubit(sl()),
+  );
+  sl.registerLazySingleton<Box<FavoriteItemHiveModel>>(
+        () => Hive.box<FavoriteItemHiveModel>('favoriteBox'),
+  );
+  sl.registerLazySingleton<FavoriteLocalDataSource>(
+        () => FavoriteLocalDataSourceImpl(sl()),
+  );
+  sl.registerLazySingleton<CheckoutRemoteDataSource>(
+        () => FirebaseCheckoutRemoteDataSource(
+      sl<FirebaseFirestore>(),
+    ),
+  );
+  sl.registerLazySingleton<CheckoutRepository>(
+        () => CheckoutRepositoryImpl(
+      remoteDataSource: sl(),
+    ),
+  );
+  sl.registerLazySingleton(
+        () => PlaceOrderUseCase(
+      repository: sl(),
+    ),
+  );
+  sl.registerFactory(
+        () => CheckoutCubit(
+            placeOrderUseCase: sl(),
+            cartLocalDataSource: sl(),
+        ),
   );
 }

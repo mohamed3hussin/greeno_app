@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:greeno_app/features/auth/domain/entities/user_entity.dart';
+import 'package:greeno_app/features/checkout/presentation/cubit/checkout_cubit.dart';
+import 'package:greeno_app/features/favorite/presentation/cubit/favorite_cubit.dart';
 import '../../../../core/dependency_injection/injection_container.dart';
 import '../../../cart/presentation/cubit/cart_cubit.dart';
 import '../cubit/navigation_cubit.dart';
@@ -23,6 +25,10 @@ class NavigationPage extends StatelessWidget {
         BlocProvider(
           create: (_) => sl<CartCubit>(),
         ),
+        BlocProvider(
+          create: (_) => sl<FavoriteCubit>(),
+        ),
+
       ],
       child: NavigationView(
         user: user,

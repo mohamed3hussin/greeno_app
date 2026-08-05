@@ -6,6 +6,7 @@ import 'package:greeno_app/core/assets_date/iconBroken.dart';
 import 'package:greeno_app/core/routes/route_names.dart';
 import 'package:greeno_app/core/theme/app_colors.dart';
 import 'package:greeno_app/core/theme/app_text_styles.dart';
+import 'package:greeno_app/features/favorite/presentation/cubit/favorite_cubit.dart';
 import 'package:greeno_app/features/home/domain/entities/product_entity.dart';
 import 'package:greeno_app/features/home/presentation/widgets/home_icon_button.dart';
 
@@ -20,6 +21,7 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isFavorite = context.watch<FavoriteCubit>().isFavorite(product);
     return GestureDetector(
       onTap: (){
         context.push(RouteNames.product, extra: product);
@@ -74,9 +76,11 @@ class ProductItem extends StatelessWidget {
                       top: 8.h,
                       left: 8.w,
                       child: HomeIconButton(
-                          icon: IconBroken.Heart,
-                          onPressed: (){},
-                          color: AppColors.primary,
+                          icon:isFavorite ? Icons.favorite : Icons.favorite_border,
+                          onPressed: (){
+                            context.read<FavoriteCubit>().toggleFavorite(product);
+                          },
+                          color:isFavorite ? AppColors.primary : AppColors.textSecondary,
                       ),
                   ),
 

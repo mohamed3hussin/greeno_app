@@ -10,5 +10,6 @@ abstract class RouteNames {
   static const String home = '/home';
   static const String product = '/product';
   static const String navigation = '/navigation';
+  static const String checkout = '/checkout';
 
 }
