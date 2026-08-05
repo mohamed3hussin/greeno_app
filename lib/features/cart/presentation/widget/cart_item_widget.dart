@@ -57,76 +57,72 @@ class CartItemWidget extends StatelessWidget {
                   ),
                 ),
                 SizedBox(width: 16.w,),
-                Text(
-                  item.product.name,
-                  style: AppTextStyles.body.copyWith(fontWeight: FontWeight.bold),
-                ),
-                Spacer(),
-                CircleAvatar(
-                  radius: 18.r,
-                  backgroundColor: Colors.red.withValues(alpha: 0.1),
-                  child: IconButton(
-                    onPressed: () {
-                      context.read<CartCubit>()
-                          .removeProduct(item.product);
-                    },
-                    icon: Icon(Icons.delete_outline,color: Colors.red,),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        item.product.name,
+                        style: AppTextStyles.body.copyWith(fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(height: 6.h,),
+                      Text(
+                        item.product.description,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppTextStyles.hint.copyWith(color: Colors.grey[500]),
+                      ),
+                      SizedBox(height: 12.h,),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              "${item.product.discountPrice ?? item.product.price} EGP",
+                              style: AppTextStyles.label.copyWith(
+                                  color: AppColors.primary,
+                                  fontWeight: FontWeight.w600
+                              ),
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              IconButton(
+                                padding: EdgeInsets.zero,
+                                onPressed: () {
+                                  context.read<CartCubit>()
+                                      .decreaseQuantity(item.product);
+                                },
+                                icon: const Icon(Icons.remove,color: Colors.red,),
+                              ),
+
+                              Text(
+                                item.quantity.toString(),
+                                style: AppTextStyles.title,
+                              ),
+
+                              IconButton(
+                                padding: EdgeInsets.zero,
+                                onPressed: () {
+                                  context.read<CartCubit>()
+                                      .increaseQuantity(item.product);
+                                },
+                                icon: const Icon(
+                                  Icons.add,
+                                  color: AppColors.primary,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
               ],
             ),
-            SizedBox(height: 8.h,),
-            Text(
-              item.product.description,
-              style: AppTextStyles.hint.copyWith(color: Colors.grey[500]),
-            ),
-            SizedBox(height: 12.h,),
-            Text(
-              "${item.product.discountPrice ?? item.product.price} EGP",
-              style: AppTextStyles.label.copyWith(
-                  color: AppColors.primary,
-                  fontWeight: FontWeight.w600
-              ),
-            ),
-            SizedBox(height: 18.h,),
-            Align(
-              alignment: Alignment.center,
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12.r),
-                  border: BoxBorder.all(color: AppColors.primary),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        context.read<CartCubit>()
-                            .decreaseQuantity(item.product);
-                      },
-                      icon: const Icon(Icons.remove,color: Colors.red,),
-                    ),
-                    SizedBox(width: 14.w,),
-                    Text(
-                      item.quantity.toString(),
-                      style: AppTextStyles.title,
-                    ),
-                    SizedBox(width: 14.w,),
-                    IconButton(
-                      onPressed: () {
-                        context.read<CartCubit>()
-                            .increaseQuantity(item.product);
-                      },
-                      icon: const Icon(
-                        Icons.add,
-                        color: AppColors.primary,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+
           ],
         ),
       ),

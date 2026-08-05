@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:greeno_app/features/auth/domain/entities/address_entity.dart';
 import 'package:greeno_app/features/cart/data/datasource/cart_local_data_source.dart';
 import 'package:greeno_app/features/checkout/domain/entities/order_entity.dart';
 import 'package:greeno_app/features/checkout/domain/usecases/place_order_use_case.dart';
@@ -20,6 +21,7 @@ class CheckoutCubit extends Cubit<CheckoutState> {
   Future<void> placeOrder({
     required UserEntity user,
     required List<CartItemEntity> items,
+    required AddressEntity address,
   })async{
     final subtotal = items.fold<double>(
       0,
@@ -38,7 +40,7 @@ class CheckoutCubit extends Cubit<CheckoutState> {
 
       userId: user.uid!,
 
-      address: user.address,
+      address: address,
 
       subtotal: subtotal,
 

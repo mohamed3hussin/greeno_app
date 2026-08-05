@@ -35,12 +35,88 @@ class CartPage extends StatelessWidget {
               child: Column(
                 children: [
                   Expanded(
-                    child: ListView.separated(
+                    child: ListView.builder(
                         itemBuilder: (context,index){
                           final item = state.items[index];
-                          return CartItemWidget(item: item);
+                          return SizedBox(
+                            height: 180.h,
+                            child: Padding(
+                              padding: EdgeInsets.only(bottom: 16.h),
+                              child: Dismissible(
+                                key: ValueKey(item.product.id),
+
+                                direction: DismissDirection.endToStart,
+
+                                background: Container(
+                                  margin: EdgeInsets.only(bottom: 16.h),
+                                  decoration: BoxDecoration(
+                                    color: Colors.red,
+                                    borderRadius: BorderRadius.circular(20.r),
+                                  ),
+                                  alignment: Alignment.centerRight,
+                                  padding: EdgeInsets.symmetric(horizontal: 20.w),
+                                  child: const Icon(
+                                    Icons.delete_outline,
+                                    color: Colors.white,
+                                    size: 30,
+                                  ),
+                                ),
+
+                                confirmDismiss: (_) async {
+                                  return await showDialog<bool>(
+                                    context: context,
+                                    builder: (_) => AlertDialog(
+                                      title: const Text("Remove Product"),
+                                      content: Text(
+                                        "Remove ${item.product.name} from cart?",
+                                      ),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context, false);
+                                          },
+                                          child: const Text("Cancel"),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context, true);
+                                          },
+                                          child: const Text("Delete"),
+                                        ),
+                                      ],
+                                    ),
+                                  ) ??
+                                      false;
+                                },
+
+                                onDismissed: (_) {
+                                  final removedItem = item;
+
+                                  final cartCubit = context.read<CartCubit>();
+
+                                  cartCubit.removeProduct(removedItem.product);
+
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text("${removedItem.product.name} removed"),
+                                      action: SnackBarAction(
+                                        label: "UNDO",
+                                        onPressed: () {
+                                          cartCubit.restoreProduct(removedItem);
+                                        },
+                                      ),
+                                    ),
+                                  );
+                                },
+
+                                child: CartItemWidget(
+                                  item: item,
+                                ),
+                              ),
+                            ),
+                          );
                         },
-                        separatorBuilder: (context,index) => SizedBox(height: 16.h,),
+
                         itemCount: state.items.length,
                     ),
                   ),
