@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:greeno_app/core/constants/primary_button.dart';
+import 'package:greeno_app/core/routes/route_names.dart';
 import 'package:greeno_app/features/auth/domain/entities/address_entity.dart';
 import 'package:greeno_app/features/auth/domain/entities/user_entity.dart';
 import 'package:greeno_app/features/cart/presentation/cubit/cart_cubit.dart';
@@ -38,12 +39,12 @@ class _CheckoutViewState extends State<CheckoutView> {
     return BlocConsumer<CheckoutCubit,CheckoutState>(
         listener: (context,state){
           if(state is CheckoutSuccess){
-            context.read<CartCubit>().loadCart();
+            context.read<CartCubit>().clearCart();
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Order placed successfully')
               )
             );
-            context.pop;
+            context.pop();
           }
           if(state is CheckoutError){
             ScaffoldMessenger.of(context).showSnackBar(
@@ -76,7 +77,18 @@ class _CheckoutViewState extends State<CheckoutView> {
                     children: [
                       CheckoutAddressCard(
                           address: selectedAddress,
-                          onChange: (){},
+                          onChange: ()async{
+                            final result = await context.push<AddressEntity>(
+                                RouteNames.selectDeliveryAddress,
+                                extra: selectedAddress,
+                            );
+                            if(result != null){
+                              setState(() {
+                                selectedAddress = result;
+                              });
+                            }
+
+                          },
                       ),
                       SizedBox(height: 16.h,),
                       CheckoutProductList(items: cartItems),

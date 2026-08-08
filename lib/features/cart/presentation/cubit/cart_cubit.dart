@@ -92,9 +92,14 @@ class CartCubit extends Cubit<CartState> {
       ),
     );
   }
-  Future<void> loadCart()async{
-    final items = localDataSource.getCart();
-    emit(state.copyWith(items: items));
+  Future<void> clearCart() async {
+    await localDataSource.clearCart();
+
+    emit(
+      state.copyWith(
+        items: [],
+      ),
+    );
   }
   Future<void> restoreProduct(CartItemEntity item) async {
     final items = List<CartItemEntity>.from(state.items);

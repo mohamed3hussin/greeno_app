@@ -7,6 +7,11 @@ enum PaymentType {
   cash,
   card,
 }
+enum PaymentStatus{
+  pending,
+  paid,
+  failed,
+}
 
 class CheckoutPaymentMethod extends StatelessWidget {
   const CheckoutPaymentMethod({

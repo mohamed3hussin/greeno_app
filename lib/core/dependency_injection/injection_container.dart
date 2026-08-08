@@ -208,7 +208,7 @@ Future<void> setupDependencies()async{
   sl.registerFactory(
         () => CheckoutCubit(
             placeOrderUseCase: sl(),
-            cartLocalDataSource: sl(),
+
         ),
   );
 }

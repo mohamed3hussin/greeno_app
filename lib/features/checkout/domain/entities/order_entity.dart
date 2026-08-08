@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:greeno_app/features/checkout/presentation/widget/checkout_payment_method.dart';
 
 import '../../../auth/domain/entities/address_entity.dart';
 import '../../../cart/domain/entities/cart_item_entity.dart';
@@ -22,6 +23,10 @@ class OrderEntity extends Equatable {
 
   final String status;
 
+  final PaymentType paymentType;
+
+  final PaymentStatus paymentStatus;
+
   const OrderEntity({
     required this.id,
     required this.items,
@@ -32,6 +37,8 @@ class OrderEntity extends Equatable {
     required this.total,
     required this.createdAt,
     required this.status,
+    required this.paymentType,
+    required this.paymentStatus,
   });
 
   @override
@@ -46,5 +53,7 @@ class OrderEntity extends Equatable {
     total,
     createdAt,
     status,
+    paymentType,
+    paymentStatus,
   ];
 }

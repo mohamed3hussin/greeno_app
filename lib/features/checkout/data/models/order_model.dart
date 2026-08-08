@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:greeno_app/features/cart/data/models/cart_item_hive_model.dart';
 import 'package:greeno_app/features/cart/data/models/cart_item_model.dart';
 import 'package:greeno_app/features/cart/domain/entities/cart_item_entity.dart';
+import 'package:greeno_app/features/checkout/presentation/widget/checkout_payment_method.dart';
 
 import '../../../auth/data/models/address_model.dart';
 import '../../domain/entities/order_entity.dart';
@@ -17,6 +18,8 @@ class OrderModel extends OrderEntity {
     required super.total,
     required super.createdAt,
     required super.status,
+    required super.paymentType,
+    required super.paymentStatus,
   });
 
   factory OrderModel.fromEntity(OrderEntity entity) {
@@ -30,6 +33,8 @@ class OrderModel extends OrderEntity {
       total: entity.total,
       createdAt: entity.createdAt,
       status: entity.status,
+      paymentType: entity.paymentType,
+      paymentStatus: entity.paymentStatus,
     );
   }
   factory OrderModel.fromJson(
@@ -62,6 +67,8 @@ class OrderModel extends OrderEntity {
       createdAt: (json['createdAt'] as Timestamp).toDate(),
 
       status: json['status'] as String,
+      paymentType: PaymentType.values.byName(json['paymentType']),
+      paymentStatus: PaymentStatus.values.byName(json['paymentStatus']),
     );
   }
   Map<String, dynamic> toJson(){
@@ -75,6 +82,8 @@ class OrderModel extends OrderEntity {
       'total':total,
       'createdAt':Timestamp.fromDate(createdAt),
       'status':status,
+      'paymentType':paymentType.name,
+      'paymentStatus':paymentStatus.name,
     };
   }
 }

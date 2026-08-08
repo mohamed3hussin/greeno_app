@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:greeno_app/core/routes/route_names.dart';
+import 'package:greeno_app/features/auth/domain/entities/address_entity.dart';
 import 'package:greeno_app/features/auth/domain/entities/user_entity.dart';
 import 'package:greeno_app/features/auth/presentation/pages/address_page.dart';
 import 'package:greeno_app/features/auth/presentation/pages/forgot_password_page.dart';
@@ -9,6 +10,7 @@ import 'package:greeno_app/features/auth/presentation/pages/login_page.dart';
 import 'package:greeno_app/features/auth/presentation/pages/register_page.dart';
 import 'package:greeno_app/features/auth/presentation/pages/verify_email_page.dart';
 import 'package:greeno_app/features/cart/presentation/pages/cart_page.dart';
+import 'package:greeno_app/features/checkout/presentation/pages/select_delivery_address_page.dart';
 import 'package:greeno_app/features/home/domain/entities/product_entity.dart';
 import 'package:greeno_app/features/home/presentation/pages/home_page.dart';
 import 'package:greeno_app/features/home/presentation/pages/product_details_page.dart';
@@ -119,6 +121,13 @@ class AppRouter {
               ),
             );
           },
+        ),
+        GoRoute(
+            path: RouteNames.selectDeliveryAddress,
+            builder: (context,state){
+              final address = state.extra as AddressEntity;
+              return SelectDeliveryAddressPage(currentAddress: address);
+            }
         ),
 
       ],

@@ -4,6 +4,7 @@ import 'package:greeno_app/features/cart/data/datasource/cart_local_data_source.
 import 'package:greeno_app/features/checkout/domain/entities/order_entity.dart';
 import 'package:greeno_app/features/checkout/domain/usecases/place_order_use_case.dart';
 import 'package:greeno_app/features/checkout/presentation/cubit/checkout_state.dart';
+import 'package:greeno_app/features/checkout/presentation/widget/checkout_payment_method.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../../core/constants/order_status.dart';
@@ -12,10 +13,8 @@ import '../../../cart/domain/entities/cart_item_entity.dart';
 
 class CheckoutCubit extends Cubit<CheckoutState> {
   final PlaceOrderUseCase placeOrderUseCase;
-  final CartLocalDataSource cartLocalDataSource;
   CheckoutCubit({
     required this.placeOrderUseCase,
-    required this.cartLocalDataSource
       }): super(CheckoutInitial());
 
   Future<void> placeOrder({
@@ -51,6 +50,8 @@ class CheckoutCubit extends Cubit<CheckoutState> {
       createdAt: DateTime.now(),
 
       status: OrderStatus.pending,
+      paymentType: PaymentType.cash,
+      paymentStatus: PaymentStatus.pending
     );
     emit(CheckoutLoading());
     final result = await placeOrderUseCase(order);
@@ -58,7 +59,6 @@ class CheckoutCubit extends Cubit<CheckoutState> {
             (failure){
               emit(CheckoutError(message: failure.message));
             }, (_) async{
-              await cartLocalDataSource.clearCart();
               emit(CheckoutSuccess());
     });
   }
