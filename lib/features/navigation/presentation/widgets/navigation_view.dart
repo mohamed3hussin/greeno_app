@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:greeno_app/features/cart/presentation/pages/cart_page.dart';
 import 'package:greeno_app/features/favorite/presentation/pages/favorite_page.dart';
+import 'package:greeno_app/features/profile/presentation/pages/profile_page.dart';
 
 import '../../../../core/assets_date/iconBroken.dart';
 import '../../../../core/theme/app_colors.dart';
@@ -24,12 +25,7 @@ class NavigationView extends StatelessWidget {
           HomePage(user: user,),
           FavoritePage(),
           CartPage(user: user,),
-
-          const Scaffold(
-            body: Center(
-              child: Text('Profile'),
-            ),
-          ),
+          ProfilePage(user: user),
         ];
 
         return Scaffold(

@@ -17,6 +17,12 @@ import 'package:greeno_app/features/favorite/data/datasource/favorite_local_data
 import 'package:greeno_app/features/favorite/data/models/favorite_item_hive_model.dart';
 import 'package:greeno_app/features/favorite/presentation/cubit/favorite_cubit.dart';
 import 'package:greeno_app/features/navigation/presentation/cubit/navigation_cubit.dart';
+import 'package:greeno_app/features/orders/data/datasource/order_remote_data_source.dart';
+import 'package:greeno_app/features/orders/data/datasource/order_remote_data_source_impl.dart';
+import 'package:greeno_app/features/orders/data/repository_impl/order_repository_impl.dart';
+import 'package:greeno_app/features/orders/domain/repositories/order_repository.dart';
+import 'package:greeno_app/features/orders/domain/usecases/get_orders_use_case.dart';
+import 'package:greeno_app/features/orders/presentation/cubit/orders_cubit.dart';
 import 'package:greeno_app/features/splash/data/data_sources/splash_remote_data_source.dart';
 import 'package:greeno_app/features/splash/data/data_sources/splash_remote_data_source_impl.dart';
 import 'package:greeno_app/features/splash/data/repositories/splash_repository_impl.dart';
@@ -208,7 +214,18 @@ Future<void> setupDependencies()async{
   sl.registerFactory(
         () => CheckoutCubit(
             placeOrderUseCase: sl(),
-
         ),
+  );
+  sl.registerLazySingleton<OrderRemoteDataSource>(
+      () => OrderRemoteDataSourceImpl(firestore: sl()),
+  );
+  sl.registerLazySingleton<OrderRepository>(
+      () => OrderRepositoryImpl(remoteDataSource: sl()),
+  );
+  sl.registerLazySingleton(
+      () => GetOrdersUseCase(repository: sl()),
+  );
+  sl.registerFactory(
+      () => OrdersCubit(ordersUseCase: sl())
   );
 }
