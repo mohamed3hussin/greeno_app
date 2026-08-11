@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
+import 'package:flutter/foundation.dart';
 import 'package:greeno_app/core/errors/exceptions.dart';
 import 'package:greeno_app/core/errors/failures.dart';
 import 'package:greeno_app/features/checkout/data/models/order_model.dart';
@@ -20,10 +21,12 @@ class OrderRemoteDataSourceImpl extends OrderRemoteDataSource {
           .orderBy('createdAt',descending: true)
           .get();
       final orders = snapshot.docs.map((doc){
+        debugPrint('ORDER DATA: ${doc.data()}');
         return OrderModel.fromJson(doc.data(), doc.id);
       }).toList();
       return orders;
     }catch(e){
+      debugPrint('GET ORDERS ERROR: $e');
       throw const ServerException(message: 'Something went wrong while fetching orders');
     }
   }

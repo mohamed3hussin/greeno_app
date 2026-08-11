@@ -15,6 +15,7 @@ import 'package:greeno_app/features/home/domain/entities/product_entity.dart';
 import 'package:greeno_app/features/home/presentation/pages/home_page.dart';
 import 'package:greeno_app/features/home/presentation/pages/product_details_page.dart';
 import 'package:greeno_app/features/navigation/presentation/pages/navigation_page.dart';
+import 'package:greeno_app/features/orders/presentation/pages/orders_page.dart';
 
 import '../../features/auth/domain/entities/register_data_entity.dart';
 import '../../features/auth/presentation/cubit/auth_cubit.dart';
@@ -127,6 +128,13 @@ class AppRouter {
             builder: (context,state){
               final address = state.extra as AddressEntity;
               return SelectDeliveryAddressPage(currentAddress: address);
+            }
+        ),
+        GoRoute(
+            path: RouteNames.myOrders,
+            builder: (context,state){
+              final user = state.extra as UserEntity;
+              return OrdersPage(user: user);
             }
         ),
 

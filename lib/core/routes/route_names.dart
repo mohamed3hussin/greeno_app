@@ -12,5 +12,6 @@ abstract class RouteNames {
   static const String navigation = '/navigation';
   static const String checkout = '/checkout';
   static const String selectDeliveryAddress = '/select_delivery_address';
+  static const String myOrders = '/my_orders';
 
 }
