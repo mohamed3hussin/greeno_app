@@ -17,6 +17,7 @@ class OrderFilterBar extends StatelessWidget {
       height: 45.h,
       child: ListView.separated(
           scrollDirection: Axis.horizontal,
+          padding: EdgeInsets.symmetric(horizontal: 8.w),
           itemBuilder: (context,index){
             final filter = OrderFilter.values[index];
             return ChoiceChip(

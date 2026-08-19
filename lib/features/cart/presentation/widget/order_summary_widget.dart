@@ -19,6 +19,7 @@ class OrderSummaryWidget extends StatelessWidget {
     final total = subtotal + delivery;
 
     return Card(
+      color: Colors.white,
       elevation: 1,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(22.r),

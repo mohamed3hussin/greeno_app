@@ -15,6 +15,7 @@ class CartItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: AppColors.primary.withOpacity(.08),
       elevation: 1.5,
       shadowColor: Colors.black.withValues(alpha: 0.08),
       shape: RoundedRectangleBorder(

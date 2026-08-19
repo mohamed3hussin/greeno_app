@@ -19,6 +19,7 @@ class FavoriteItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final isFavorite = context.watch<FavoriteCubit>().isFavorite(product);
     return Card(
+      color: AppColors.primary.withOpacity(.08),
       elevation: 1.5,
       shadowColor: Colors.black.withValues(alpha: 0.08),
       shape: RoundedRectangleBorder(
