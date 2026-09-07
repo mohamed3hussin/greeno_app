@@ -10,11 +10,13 @@ import 'package:greeno_app/features/auth/presentation/pages/login_page.dart';
 import 'package:greeno_app/features/auth/presentation/pages/register_page.dart';
 import 'package:greeno_app/features/auth/presentation/pages/verify_email_page.dart';
 import 'package:greeno_app/features/cart/presentation/pages/cart_page.dart';
+import 'package:greeno_app/features/checkout/domain/entities/order_entity.dart';
 import 'package:greeno_app/features/checkout/presentation/pages/select_delivery_address_page.dart';
 import 'package:greeno_app/features/home/domain/entities/product_entity.dart';
 import 'package:greeno_app/features/home/presentation/pages/home_page.dart';
 import 'package:greeno_app/features/home/presentation/pages/product_details_page.dart';
 import 'package:greeno_app/features/navigation/presentation/pages/navigation_page.dart';
+import 'package:greeno_app/features/orders/presentation/pages/order_details_page.dart';
 import 'package:greeno_app/features/orders/presentation/pages/orders_page.dart';
 
 import '../../features/auth/domain/entities/register_data_entity.dart';
@@ -135,6 +137,15 @@ class AppRouter {
             builder: (context,state){
               final user = state.extra as UserEntity;
               return OrdersPage(user: user);
+            }
+        ),
+        GoRoute(
+            path: RouteNames.orderDetails,
+            builder: (context, state){
+              final data = state.extra as Map<String,dynamic>;
+              final order = data['order'] as OrderEntity;
+              final user = data['user'] as UserEntity;
+              return OrderDetailsPage(order: order,user: user,);
             }
         ),
 

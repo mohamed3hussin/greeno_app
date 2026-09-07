@@ -16,7 +16,7 @@ class OrdersPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
         create: (_) => sl<OrdersCubit>()..getOrders(user.uid!),
-        child: OrderPageView(),
+        child: OrderPageView(user: user,),
     );
   }
 }
