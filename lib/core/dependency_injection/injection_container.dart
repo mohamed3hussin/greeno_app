@@ -21,6 +21,7 @@ import 'package:greeno_app/features/orders/data/datasource/order_remote_data_sou
 import 'package:greeno_app/features/orders/data/datasource/order_remote_data_source_impl.dart';
 import 'package:greeno_app/features/orders/data/repository_impl/order_repository_impl.dart';
 import 'package:greeno_app/features/orders/domain/repositories/order_repository.dart';
+import 'package:greeno_app/features/orders/domain/usecases/cancel_order_usecase.dart';
 import 'package:greeno_app/features/orders/domain/usecases/get_orders_use_case.dart';
 import 'package:greeno_app/features/orders/presentation/cubit/orders_cubit.dart';
 import 'package:greeno_app/features/splash/data/data_sources/splash_remote_data_source.dart';
@@ -225,7 +226,10 @@ Future<void> setupDependencies()async{
   sl.registerLazySingleton(
       () => GetOrdersUseCase(repository: sl()),
   );
+  sl.registerLazySingleton(
+      () => CancelOrderUseCase(repository: sl())
+  );
   sl.registerFactory(
-      () => OrdersCubit(ordersUseCase: sl())
+      () => OrdersCubit(ordersUseCase: sl(),cancelOrderUseCase: sl())
   );
 }

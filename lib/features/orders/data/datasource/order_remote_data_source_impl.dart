@@ -30,4 +30,25 @@ class OrderRemoteDataSourceImpl extends OrderRemoteDataSource {
       throw const ServerException(message: 'Something went wrong while fetching orders');
     }
   }
+  @override
+  Future<void> cancelOrder(
+      String userUid,
+      String orderId,
+      ) async {
+    try {
+      await firestore
+          .collection('users')
+          .doc(userUid)
+          .collection('orders')
+          .doc(orderId)
+          .update({
+        'status': 'cancelled',
+      });
+    } catch (e) {
+      debugPrint('CANCEL ORDER ERROR: $e');
+      throw const ServerException(
+        message: 'Something went wrong while cancelling order',
+      );
+    }
+  }
 }

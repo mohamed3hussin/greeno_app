@@ -30,4 +30,26 @@ class OrderRepositoryImpl extends OrderRepository {
       );
     }
   }
+  @override
+  Future<Either<Failure, void>> cancelOrder(
+      String userUid,
+      String orderId,
+      ) async {
+    try {
+      await remoteDataSource.cancelOrder(userUid, orderId);
+      return const Right(null);
+    } on ServerException catch (e) {
+      return Left(
+        ServerFailure(
+          message: e.message,
+        ),
+      );
+    } catch (e) {
+      return Left(
+        ServerFailure(
+          message: e.toString(),
+        ),
+      );
+    }
+  }
 }

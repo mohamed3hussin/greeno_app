@@ -17,6 +17,17 @@ class ItemsWidget extends StatelessWidget {
     final price = item.product.discountPrice?? item.product.price;
     return Row(
       children: [
+        Container(
+          height: 70.h,
+          width: 70.w,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12.r),
+            color: Colors.grey.shade100
+          ),
+          clipBehavior: Clip.antiAlias,
+          child: Image.network(item.product.images.first,fit: BoxFit.cover,),
+        ),
+        SizedBox(width: 12.w,),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

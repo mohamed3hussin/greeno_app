@@ -4,4 +4,8 @@ import 'package:greeno_app/features/checkout/data/models/order_model.dart';
 
 abstract class OrderRemoteDataSource {
   Future<List<OrderModel>> getOrders(String userUid);
+  Future<void> cancelOrder(
+      String userUid,
+      String orderId,
+      );
 }

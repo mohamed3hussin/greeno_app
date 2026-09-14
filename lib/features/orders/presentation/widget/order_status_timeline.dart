@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:greeno_app/core/constants/order_status.dart';
 import 'package:greeno_app/core/theme/app_colors.dart';
 import 'package:greeno_app/core/theme/app_text_styles.dart';
 import 'package:greeno_app/features/checkout/domain/entities/order_entity.dart';
@@ -22,25 +23,55 @@ class OrderStatusTimeline extends StatelessWidget {
           children: [
             _buildStatusItem(
               title: 'Order Placed',
-              isCompleted: true,
+              isCompleted: isStepCompleted(
+                  order.status,
+                  OrderStatus.pending,
+              ),
             ),
             _buildStatusItem(
               title: 'Confirmed',
-              isCompleted: true,
+              isCompleted: isStepCompleted(
+                order.status,
+                OrderStatus.confirmed,
+              ),
             ),
             _buildStatusItem(
               title: 'Shipping',
-              isCompleted: false,
+              isCompleted: isStepCompleted(
+                order.status,
+                OrderStatus.shipping,
+              ),
             ),
             _buildStatusItem(
               title: 'Delivered',
-              isCompleted: false,
+              isCompleted: isStepCompleted(
+                order.status,
+                OrderStatus.delivered,
+              ),
             ),
           ],
         ),
       ),
     );
   }
+}
+int getStatusIndex(String status){
+  switch(status){
+    case OrderStatus.pending:
+      return 0;
+    case OrderStatus.confirmed:
+      return 1;
+    case OrderStatus.shipping:
+      return 2;
+    case OrderStatus.delivered:
+      return 3;
+    default:
+      return -1;
+
+  }
+}
+bool isStepCompleted(String currentStatus,String stepStatus){
+  return getStatusIndex(currentStatus) >= getStatusIndex(stepStatus);
 }
 Widget _buildStatusItem({
   required String title,

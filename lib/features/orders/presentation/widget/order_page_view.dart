@@ -84,6 +84,7 @@ class OrderPageView extends StatelessWidget {
                             extra: {
                               'order':order,
                               'user': user,
+                              'orderCubit':context.read<OrdersCubit>(),
                             }
                           );
                         },

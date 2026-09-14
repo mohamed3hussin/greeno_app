@@ -23,6 +23,7 @@ import '../../features/auth/domain/entities/register_data_entity.dart';
 import '../../features/auth/presentation/cubit/auth_cubit.dart';
 import '../../features/cart/presentation/cubit/cart_cubit.dart';
 import '../../features/checkout/presentation/pages/checkout_page.dart';
+import '../../features/orders/presentation/cubit/orders_cubit.dart';
 import '../../features/splash/presentation/pages/splash_page.dart';
 import '../dependency_injection/injection_container.dart';
 
@@ -140,13 +141,21 @@ class AppRouter {
             }
         ),
         GoRoute(
-            path: RouteNames.orderDetails,
-            builder: (context, state){
-              final data = state.extra as Map<String,dynamic>;
-              final order = data['order'] as OrderEntity;
-              final user = data['user'] as UserEntity;
-              return OrderDetailsPage(order: order,user: user,);
-            }
+          path: RouteNames.orderDetails,
+          builder: (context, state) {
+            final data = state.extra as Map<String, dynamic>;
+            final order = data['order'] as OrderEntity;
+            final user = data['user'] as UserEntity;
+            final orderCubit = data['orderCubit'] as OrdersCubit;
+
+            return BlocProvider.value(
+              value: orderCubit,
+              child: OrderDetailsPage(
+                order: order,
+                user: user,
+              ),
+            );
+          },
         ),
 
       ],

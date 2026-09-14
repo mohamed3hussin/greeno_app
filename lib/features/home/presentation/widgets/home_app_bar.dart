@@ -58,15 +58,16 @@ class HomeAppBar extends StatelessWidget {
                         context.read<NavigationCubit>().changeTab(2);
                       },
                     ),
-                    Positioned(
-                      top: 4.h,
-                      right: 4.w,
-                      child: CircleAvatar(
-                        backgroundColor: AppColors.primary,
-                        radius: 8.r,
-                        child: Center(child: Text('$items',style: AppTextStyles.hint.copyWith(color: Colors.white,height: 1),)),
+                    if(items > 0)
+                      Positioned(
+                        top: 4.h,
+                        right: 4.w,
+                        child: CircleAvatar(
+                          backgroundColor: AppColors.primary,
+                          radius: 8.r,
+                          child: Center(child: Text('$items',style: AppTextStyles.hint.copyWith(color: Colors.white,height: 1),)),
+                        ),
                       ),
-                    ),
                   ],
                 ),
               ],
